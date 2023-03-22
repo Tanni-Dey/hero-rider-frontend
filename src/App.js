@@ -8,16 +8,25 @@ import Signup from "./components/pages/Signup/Signup";
 import Profile from "./components/pages/Profile/Profile";
 import Userlist from "./components/pages/Userlist/Userlist";
 import Login from "./components/pages/Login/Login";
+import RequiredAuth from "./components/shared/RequiredAuth/RequiredAuth";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Profile />,
+      element: (
+        <RequiredAuth>
+          <Profile />
+        </RequiredAuth>
+      ),
     },
     {
       path: "/user",
-      element: <Userlist />,
+      element: (
+        <RequiredAuth>
+          <Userlist />
+        </RequiredAuth>
+      ),
     },
     {
       path: "/signup",
