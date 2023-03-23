@@ -9,6 +9,7 @@ import Profile from "./components/pages/Profile/Profile";
 import Userlist from "./components/pages/Userlist/Userlist";
 import Login from "./components/pages/Login/Login";
 import RequiredAuth from "./components/shared/RequiredAuth/RequiredAuth";
+import RequiredAdmin from "./components/shared/RequiredAdmin/RequiredAdmin";
 
 function App() {
   const router = createBrowserRouter([
@@ -23,9 +24,9 @@ function App() {
     {
       path: "/user",
       element: (
-        <RequiredAuth>
+        <RequiredAdmin>
           <Userlist />
-        </RequiredAuth>
+        </RequiredAdmin>
       ),
     },
     {

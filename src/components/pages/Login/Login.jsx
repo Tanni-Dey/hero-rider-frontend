@@ -8,8 +8,10 @@ import Header from "../../shared/Header/Header";
 const Login = () => {
   const navigate = useNavigate();
   let location = useLocation();
+
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+
   const handleLogin = (e) => {
     e.preventDefault();
     const emailInput = e.target.email.value;

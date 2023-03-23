@@ -2,9 +2,11 @@ import React from "react";
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import auth from "../../../firebase.init";
+import useAdmin from "../../hooks/useAdmin";
 
 const Header = () => {
   const [user] = useAuthState(auth);
+  const [admin] = useAdmin(user);
   const [signOut, loading, error] = useSignOut(auth);
   return (
     <>
@@ -34,7 +36,7 @@ const Header = () => {
                 )}
               </li>
               <li class="nav-item">
-                {user && (
+                {admin && user && (
                   <Link to="/user" class="nav-link">
                     Users
                   </Link>

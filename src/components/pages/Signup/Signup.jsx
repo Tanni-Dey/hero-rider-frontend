@@ -4,9 +4,11 @@ import Footer from "../../shared/Footer/Footer";
 import Header from "../../shared/Header/Header";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const [riderPassError, setRiderPassError] = useState("");
@@ -47,6 +49,18 @@ const Signup = () => {
     if (pass === cPass) {
       setRiderPassError("");
       createUserWithEmailAndPassword(emailInput, pass);
+      if (!error) {
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((res) => res.json())
+          .then((addData) => console.log(addData));
+        // e.target.reset();
+      }
     } else {
       setRiderPassError("Password and Confirm Password is not same");
     }
@@ -81,12 +95,25 @@ const Signup = () => {
     if (pass === cPass) {
       setLearnerPassError("");
       createUserWithEmailAndPassword(emailInput, pass);
+
+      fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((addData) => console.log(addData));
+      // e.target.reset();
     } else {
       setLearnerPassError("Password and Confirm Password is not same");
     }
     console.log(data);
   };
-
+  if (user) {
+    navigate("/");
+  }
   return (
     <>
       <Header />
