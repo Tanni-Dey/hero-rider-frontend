@@ -50,7 +50,7 @@ const Signup = () => {
       setRiderPassError("");
       createUserWithEmailAndPassword(emailInput, pass);
       if (!error) {
-        fetch("http://localhost:5000/users", {
+        fetch("https://hero-rider-backend.onrender.com/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -96,7 +96,7 @@ const Signup = () => {
       setLearnerPassError("");
       createUserWithEmailAndPassword(emailInput, pass);
 
-      fetch("http://localhost:5000/users", {
+      fetch("https://hero-rider-backend.onrender.com/users", {
         method: "POST",
         headers: {
           "content-type": "application/json",

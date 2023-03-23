@@ -15,7 +15,7 @@ const Userlist = () => {
 
   //pagination fetch
   useEffect(() => {
-    fetch("http://localhost:5000/pagination")
+    fetch("https://hero-rider-backend.onrender.com/pagination")
       .then((res) => res.json())
       .then((data) => {
         const usernumber = data.count;
@@ -25,9 +25,7 @@ const Userlist = () => {
   }, []);
 
   useEffect(() => {
-    fetch(
-      `http://localhost:5000/users?page=${selectPage}&size=${10}&email=${searchEmail}&phone=${searchPhone}&fullName=${searchFullname}`
-    )
+    fetch(`https://hero-rider-backend.onrender.com/users`)
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, [selectPage, searchEmail, searchFullname, searchPhone]);
@@ -125,6 +123,7 @@ const Userlist = () => {
               <th scope="col">Email</th>
               <th scope="col">Phone</th>
               <th scope="col">Age</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -135,6 +134,9 @@ const Userlist = () => {
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
                 <td>{user.age}</td>
+                <td>
+                  <button className="btn btn-danger">block</button>
+                </td>
               </tr>
             ))}
           </tbody>
