@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import auth from "../../../firebase.init";
 import useAdmin from "../../hooks/useAdmin";
+import { AppContext } from "../../../App";
 
 const Header = () => {
   const [user] = useAuthState(auth);
   const [admin] = useAdmin(user);
   const [signOut, loading, error] = useSignOut(auth);
+  const [adminNum, setAdminNum] = useContext(AppContext);
+
   return (
     <>
       <nav class="navbar navbar-expand-lg bg-warning">
@@ -36,7 +39,7 @@ const Header = () => {
                 )}
               </li>
               <li class="nav-item">
-                {admin && user && (
+                {user && (
                   <Link to="/user" class="nav-link">
                     Users
                   </Link>
@@ -59,6 +62,9 @@ const Header = () => {
                     Login
                   </Link>
                 )}
+              </li>
+              <li class="nav-item">
+                <h6>Admin Number - {adminNum}</h6>
               </li>
             </ul>
           </div>

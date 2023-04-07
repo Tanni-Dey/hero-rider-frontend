@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../shared/Footer/Footer";
 import Header from "../../shared/Header/Header";
+import axios from "axios";
+import { AppContext } from "../../../App";
 
 const Userlist = () => {
   const [users, setUsers] = useState([]);
@@ -10,8 +12,7 @@ const Userlist = () => {
   const [searchEmail, setSearchEmail] = useState("");
   const [searchFullname, setSearchFullname] = useState("");
   const [searchPhone, setSearchPhone] = useState("");
-  const [searchMinAge, setSearchMinAge] = useState("");
-  const [searchMaxAge, setSearchMaxAge] = useState("");
+  const [adminNum, setAdminNum] = useContext(AppContext);
 
   //pagination fetch
   useEffect(() => {
@@ -25,9 +26,13 @@ const Userlist = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://hero-rider-backend.onrender.com/users`)
-      .then((res) => res.json())
-      .then((data) => setUsers(data));
+    async function getData() {
+      const { data } = await axios.get(
+        `https://hero-rider-backend.onrender.com/users?page=${selectPage}&size=${10}&email=${searchEmail}&fullName=${searchFullname}&phone=${searchPhone}`
+      );
+      setUsers(data);
+    }
+    getData();
   }, [selectPage, searchEmail, searchFullname, searchPhone]);
 
   return (
@@ -97,7 +102,7 @@ const Userlist = () => {
                     setSearchFullname("");
                   }}
                 >
-                  <input
+                  {/* <input
                     type="text"
                     name="minAge"
                     className="form-control form-control-sm"
@@ -108,7 +113,7 @@ const Userlist = () => {
                     name="maxAge"
                     className="form-control form-control-sm"
                     placeholder="Maximum Age"
-                  />
+                  /> */}
                 </form>
               </th>
             </tr>
@@ -135,7 +140,12 @@ const Userlist = () => {
                 <td>{user.phone}</td>
                 <td>{user.age}</td>
                 <td>
-                  <button className="btn btn-danger">block</button>
+                  <button
+                    onClick={() => setAdminNum(adminNum + 1)}
+                    className="btn btn-success"
+                  >
+                    Make Admin
+                  </button>
                 </td>
               </tr>
             ))}

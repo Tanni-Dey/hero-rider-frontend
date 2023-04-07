@@ -10,8 +10,13 @@ import Userlist from "./components/pages/Userlist/Userlist";
 import Login from "./components/pages/Login/Login";
 import RequiredAuth from "./components/shared/RequiredAuth/RequiredAuth";
 import RequiredAdmin from "./components/shared/RequiredAdmin/RequiredAdmin";
+import { createContext, useState } from "react";
+
+export const AppContext = createContext();
 
 function App() {
+  const [adminNum, setAdminNum] = useState(0);
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -24,9 +29,9 @@ function App() {
     {
       path: "/user",
       element: (
-        <RequiredAdmin>
+        <RequiredAuth>
           <Userlist />
-        </RequiredAdmin>
+        </RequiredAuth>
       ),
     },
     {
@@ -39,9 +44,11 @@ function App() {
     },
   ]);
   return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
+    <AppContext.Provider value={[adminNum, setAdminNum]}>
+      <div className="App">
+        <RouterProvider router={router} />
+      </div>
+    </AppContext.Provider>
   );
 }
 
